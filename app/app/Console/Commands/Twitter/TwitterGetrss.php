@@ -63,10 +63,39 @@ class TwitterGetrss extends Command
 		 */
 		$rss = $this->domain.$this->user_tw.$twitter_user.'&url_id_hash='.$this->url_id_hash;
 		$getrss = file_get_contents($rss);
-		$xml_object = json_decode(json_encode(simplexml_load_string($getrss),TRUE));
-		var_dump($xml_object);
+		$xml = simplexml_load_string($getrss);
+		// $xml = json_decode(json_encode(simplexml_load_string($getrss),TRUE));
+		$i=0;
+		
+		foreach ($xml as $objects) {
+			foreach ($objects as $key => $lines) {
+				
+				if ($i < 10) {
+					// echo $i."::";
+					// var_dump($lines);
+					echo $lines->title."\n";
+					echo $lines->link."\n";
+					echo $lines->description."\n";
+					echo $lines->author."\n";
+					echo $lines->pubDate."\n";
+
+					/**
+					 * 
+					 */
 
 
+
+					$i++;
+				} else {
+					$i++;
+				}
+				
+
+			}
+		}
+		// var_dump($xml);
+
+		
 		return $tweets;
 	}
 }
